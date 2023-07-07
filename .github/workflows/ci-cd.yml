@@ -20,7 +20,7 @@ jobs:
         docker build -t firstapp:latest .
         cat ~/my_password.txt | docker login --username mallikharjun999 --password-stdin
         docker image tag firstapp:latest mallikharjun999/codesense:${{ steps.buildnumber.outputs.build_number }}
-        docker push mallikharjun999:${{ steps.buildnumber.outputs.build_number }}
+        docker push mallikharjun999/codesense:${{ steps.buildnumber.outputs.build_number }}
 
     - name: Build SecondApp
       if: ${{ contains(github.event.head_commit.modified, 'SecondApp/') }}
