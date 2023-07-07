@@ -3,44 +3,37 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - main # Replace with your main branch name
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Build FirstApp
-        if: 'contains(github.event.head_commit.modified, FirstApp ) || contains(github.event.head_commit.added, FirstApp )'    
-        run: |
-          cd FirstApp
-          cp -R ../Modules .
-          # Additional build steps for FirstApp
+    - name: Build FirstApp
+      if: ${{ contains(github.event.head_commit.modified, 'FirstApp/') }}
+      run: |
+        cd FirstApp
+        docker build -t ghcr.io/<username>/firstapp:${{ github.sha }} .
+        docker push ghcr.io/<username>/firstapp:${{ github.sha }}
 
-      - name: Build SecondApp
-        if: 'contains( github.event.head_commit.modified,"SecondApp" ) || contains( github.event.head_commit.added,"SecondApp" )'
-        run: |
-          cd SecondApp
-          cp -R ../Modules .
-          # Additional build steps for SecondApp
+    - name: Build SecondApp
+      if: ${{ contains(github.event.head_commit.modified, 'SecondApp/') }}
+      run: |
+        cd SecondApp
+        docker build -t ghcr.io/<username>/secondapp:${{ github.sha }} .
+        docker push ghcr.io/<username>/secondapp:${{ github.sha }}
 
-      - name: Build Both Apps
-        if: 'contains( github.event.head_commit.modified,"Modules" ) || contains( github.event.head_commit.added,"Modules" )'
-        run: |
-          cd FirstApp
-          cp -R ../Modules .
-          # Additional build steps for FirstApp
+    - name: Build FirstApp and SecondApp
+      if: ${{ contains(github.event.head_commit.modified, 'Modules/') }}
+      run: |
+        cd FirstApp
+        docker build -t ghcr.io/<username>/firstapp:${{ github.sha }} .
+        docker push ghcr.io/<username>/firstapp:${{ github.sha }}
 
-          cd ../SecondApp
-          cp -R ../Modules .
-          # Additional build steps for SecondApp
- 
-      - name: Docker Build and Push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ github.repository }}/my-app:${{ github.sha }}
+        cd ../SecondApp
+        docker build -t ghcr.io/<username>/secondapp:${{ github.sha }} .
+        docker push ghcr.io/<username>/secondapp:${{ github.sha }}
