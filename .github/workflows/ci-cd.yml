@@ -18,22 +18,22 @@ jobs:
       run: |
         cd FirstApp
         docker build -t firstapp:${{ github.sha }} .
-        docker push mallikharjun999/firstapp:${{ github.sha }}
+        docker push mallikharjun999/codesense:firstapp${{ github.sha }}
 
     - name: Build SecondApp
       if: ${{ contains(github.event.head_commit.modified, 'SecondApp/') }}
       run: |
         cd SecondApp
         docker build -t secondapp:${{ github.sha }} .
-        docker push mallikharjun999/secondapp:${{ github.sha }}
+        docker push mallikharjun999/codesense:secondapp${{ github.sha }}
 
     - name: Build FirstApp and SecondApp
       if: ${{ contains(github.event.head_commit.modified, 'Modules/') }}
       run: |
         cd FirstApp
         docker build -t firstapp:${{ github.sha }} .
-        docker push mallikharjun999/firstapp:${{ github.sha }}
+        docker push mallikharjun999/codesense:firstapp${{ github.sha }}
 
         cd ../SecondApp
         docker build -t secondapp:${{ github.sha }} .
-        docker push mallikharjun999/secondapp:${{ github.sha }}
+        docker push mallikharjun999/codesense:secondapp${{ github.sha }}
