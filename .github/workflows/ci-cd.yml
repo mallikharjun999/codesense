@@ -17,27 +17,27 @@ jobs:
       if: ${{ contains(github.event.head_commit.modified, 'FirstApp/') }}
       run: |
         cd FirstApp
-        docker build -t firstapp:${{ github.sha }} .
+        docker build -t firstapp .
         docker login -u mallikharjun999 -p Malli@1997
-        docker push mallikharjun999/codesense:firstapp${{ github.sha }}
+        docker push mallikharjun999/codesense:firstapp
 
     - name: Build SecondApp
       if: ${{ contains(github.event.head_commit.modified, 'SecondApp/') }}
       run: |
         cd SecondApp
-        docker build -t secondapp:${{ github.sha }} .
+        docker build -t secondapp .
         docker login -u mallikharjun999 -p Malli@1997
-        docker push mallikharjun999/codesense:secondapp${{ github.sha }}
+        docker push mallikharjun999/codesense:secondapp
 
     - name: Build FirstApp and SecondApp
       if: ${{ contains(github.event.head_commit.modified, 'Modules/') }}
       run: |
         cd FirstApp
-        docker build -t firstapp:${{ github.sha }} .
+        docker build -t firstapp .
         docker login -u mallikharjun999 -p Malli@1997
-        docker push mallikharjun999/codesense:firstapp${{ github.sha }}
+        docker push mallikharjun999/codesense:firstapp
 
         cd ../SecondApp
-        docker build -t secondapp:${{ github.sha }} .
+        docker build -t secondapp .
         docker login -u mallikharjun999 -p Malli@1997
-        docker push mallikharjun999/codesense:secondapp${{ github.sha }}
+        docker push mallikharjun999/codesense:secondapp
