@@ -18,7 +18,7 @@ jobs:
       run: |
         cd FirstApp
         docker build -t firstapp:${{ steps.buildnumber.outputs.build_number }} .
-        cat ~/my_password.txt | docker login --username foo --password-stdin
+        cat ~/my_password.txt | docker login --username mallikharjun999 --password-stdin
         docker image tag firstapp:${{ steps.buildnumber.outputs.build_number }} mallikharjun999/codesense
         docker push mallikharjun999
 
@@ -27,7 +27,7 @@ jobs:
       run: |
         cd SecondApp
         docker build -t secondapp:${{ steps.buildnumber.outputs.build_number }} .
-        cat ~/my_password.txt | docker login --username foo --password-stdin
+        cat ~/my_password.txt | docker login --username mallikharjun999 --password-stdin
         docker image tag firstapp:${{ steps.buildnumber.outputs.build_number }} mallikharjun999/codesense
         docker push mallikharjun999/codesense
 
@@ -36,12 +36,12 @@ jobs:
       run: |
         cd FirstApp
         docker build -t firstapp:${{ steps.buildnumber.outputs.build_number }} .
-        cat ~/my_password.txt | docker login --username foo --password-stdin
+        cat ~/my_password.txt | docker login --username mallikharjun999 --password-stdin
         docker image tag firstapp:${{ steps.buildnumber.outputs.build_number }} mallikharjun999/codesense
         docker push mallikharjun999/codesense
 
         cd ../SecondApp
         docker build -t secondapp:${{ steps.buildnumber.outputs.build_number }} .
-        cat ~/my_password.txt | docker login --username foo --password-stdin
+        cat ~/my_password.txt | docker login --username mallikharjun999 --password-stdin
         docker image tag firstapp:${{ steps.buildnumber.outputs.build_number }} mallikharjun999/codesense
         docker push mallikharjun999/codesense
