@@ -17,27 +17,31 @@ jobs:
       if: ${{ contains(github.event.head_commit.modified, 'FirstApp/') }}
       run: |
         cd FirstApp
-        docker build -t firstapp .
-        docker login -u mallikharjun999 -p Malli@1997
-        docker push mallikharjun999/codesense:firstapp
+        docker build -t firstapp:${{ steps.buildnumber.outputs.build_number }} .
+        cat ~/my_password.txt | docker login --username foo --password-stdin
+        docker image tag firstapp:${{ steps.buildnumber.outputs.build_number }} mallikharjun999/codesense
+        docker push mallikharjun999
 
     - name: Build SecondApp
       if: ${{ contains(github.event.head_commit.modified, 'SecondApp/') }}
       run: |
         cd SecondApp
-        docker build -t secondapp .
-        docker login -u mallikharjun999 -p Malli@1997
-        docker push mallikharjun999/codesense:secondapp
+        docker build -t secondapp:${{ steps.buildnumber.outputs.build_number }} .
+        cat ~/my_password.txt | docker login --username foo --password-stdin
+        docker image tag firstapp:${{ steps.buildnumber.outputs.build_number }} mallikharjun999/codesense
+        docker push mallikharjun999/codesense
 
     - name: Build FirstApp and SecondApp
       if: ${{ contains(github.event.head_commit.modified, 'Modules/') }}
       run: |
         cd FirstApp
-        docker build -t firstapp .
-        docker login -u mallikharjun999 -p Malli@1997
-        docker push mallikharjun999/codesense:firstapp
+        docker build -t firstapp:${{ steps.buildnumber.outputs.build_number }} .
+        cat ~/my_password.txt | docker login --username foo --password-stdin
+        docker image tag firstapp:${{ steps.buildnumber.outputs.build_number }} mallikharjun999/codesense
+        docker push mallikharjun999/codesense
 
         cd ../SecondApp
-        docker build -t secondapp .
-        docker login -u mallikharjun999 -p Malli@1997
-        docker push mallikharjun999/codesense:secondapp
+        docker build -t secondapp:${{ steps.buildnumber.outputs.build_number }} .
+        cat ~/my_password.txt | docker login --username foo --password-stdin
+        docker image tag firstapp:${{ steps.buildnumber.outputs.build_number }} mallikharjun999/codesense
+        docker push mallikharjun999/codesense
