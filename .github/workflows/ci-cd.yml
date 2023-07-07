@@ -18,6 +18,7 @@ jobs:
       run: |
         cd FirstApp
         docker build -t firstapp:${{ github.sha }} .
+        docker login -u mallikharjun999 -p Malli@1997
         docker push mallikharjun999/codesense:firstapp${{ github.sha }}
 
     - name: Build SecondApp
@@ -25,6 +26,7 @@ jobs:
       run: |
         cd SecondApp
         docker build -t secondapp:${{ github.sha }} .
+        docker login -u mallikharjun999 -p Malli@1997
         docker push mallikharjun999/codesense:secondapp${{ github.sha }}
 
     - name: Build FirstApp and SecondApp
@@ -32,8 +34,10 @@ jobs:
       run: |
         cd FirstApp
         docker build -t firstapp:${{ github.sha }} .
+        docker login -u mallikharjun999 -p Malli@1997
         docker push mallikharjun999/codesense:firstapp${{ github.sha }}
 
         cd ../SecondApp
         docker build -t secondapp:${{ github.sha }} .
+        docker login -u mallikharjun999 -p Malli@1997
         docker push mallikharjun999/codesense:secondapp${{ github.sha }}
