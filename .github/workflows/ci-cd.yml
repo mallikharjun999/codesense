@@ -19,16 +19,16 @@ jobs:
         cd FirstApp
         docker build -t firstapp:latest .
         cat ~/my_password.txt | docker login --username mallikharjun999 --password-stdin
-        docker image tag firstapp:latest mallikharjun999/codesense:${{ steps.buildnumber.outputs.build_number }}
-        docker push mallikharjun999/codesense:${{ steps.buildnumber.outputs.build_number }}
+        docker image tag firstapp:latest mallikharjun999/codesense
+        docker push mallikharjun999/codesense
 
     - name: Build SecondApp
       if: ${{ contains(github.event.head_commit.modified, 'SecondApp/') }}
       run: |
         cd SecondApp
-        docker build -t secondapp:${{ steps.buildnumber.outputs.build_number }} .
+        docker build -t secondapp:latest .
         cat ~/my_password.txt | docker login --username mallikharjun999 --password-stdin
-        docker image tag firstapp:${{ steps.buildnumber.outputs.build_number }} mallikharjun999/codesense
+        docker image tag firstapp:latest mallikharjun999/codesense
         docker push mallikharjun999/codesense
 
     - name: Build FirstApp and SecondApp
